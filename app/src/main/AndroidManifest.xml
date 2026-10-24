@@ -19,6 +19,7 @@
         android:theme="@style/Theme.BScNotes">
         <activity
             android:name=".dashboard.DashBoardManagerActivity"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
             android:exported="false" />
         <activity
             android:name=".auth.SigninManagerActivity"

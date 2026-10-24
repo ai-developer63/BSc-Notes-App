@@ -1,66 +1,99 @@
 package app.nepaliapp.bscnotes.dashboard.fragments;
 
+import android.graphics.Color;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import app.nepaliapp.bscnotes.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ChatFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.ArrayList;
+import java.util.List;
+
 public class ChatFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private RecyclerView recyclerViewMessages;
+    private EditText etMessageInput;
+    private Button btnSend;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private List<String> messageList;
+    private RecyclerView.Adapter<MessageViewHolder> messageAdapter;
 
-    public ChatFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ChatFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static ChatFragment newInstance(String param1, String param2) {
-        ChatFragment fragment = new ChatFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
+    @Nullable
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_chat, container, false);
+        View view = inflater.inflate(R.layout.fragment_chat, container, false);
+
+        // Initialize views
+        recyclerViewMessages = view.findViewById(R.id.recyclerViewMessages);
+        etMessageInput = view.findViewById(R.id.etMessageInput);
+        btnSend = view.findViewById(R.id.btnSend);
+
+        messageList = new ArrayList<>();
+
+        // Setup RecyclerView
+        setupRecyclerView();
+
+        // Handle Send Button click
+        btnSend.setOnClickListener(v -> {
+            String messageText = etMessageInput.getText().toString().trim();
+            if (!messageText.isEmpty()) {
+                messageList.add(messageText);
+                messageAdapter.notifyItemInserted(messageList.size() - 1);
+                recyclerViewMessages.scrollToPosition(messageList.size() - 1);
+                etMessageInput.getText().clear();
+            }
+        });
+
+        return view;
+    }
+
+    private void setupRecyclerView() {
+        messageAdapter = new RecyclerView.Adapter<MessageViewHolder>() {
+            @NonNull
+            @Override
+            public MessageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                TextView textView = new TextView(parent.getContext());
+                textView.setLayoutParams(new ViewGroup.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT
+                ));
+                textView.setPadding(24, 16, 24, 16);
+                textView.setTextSize(16f);
+                textView.setTextColor(Color.BLACK);
+                return new MessageViewHolder(textView);
+            }
+
+            @Override
+            public void onBindViewHolder(@NonNull MessageViewHolder holder, int position) {
+                ((TextView) holder.itemView).setText(messageList.get(position));
+            }
+
+            @Override
+            public int getItemCount() {
+                return messageList.size();
+            }
+        };
+
+        recyclerViewMessages.setLayoutManager(new LinearLayoutManager(requireContext()));
+        recyclerViewMessages.setAdapter(messageAdapter);
+    }
+
+    // ViewHolder class
+    private static class MessageViewHolder extends RecyclerView.ViewHolder {
+        public MessageViewHolder(@NonNull View itemView) {
+            super(itemView);
+        }
     }
 }

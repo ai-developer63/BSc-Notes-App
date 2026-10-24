@@ -37,6 +37,16 @@ public class Url {
     String collegeSearch = "api/colleges/search";
     String collegeRequestMissing = "api/colleges/request-missing";
 
+    // Home Videos Url
+    String tutorialVideos = "api/tutorial-videos";
+    // Add methods for HomeVideos
+    public String getTutorialVideos() {
+        return officialUrl + tutorialVideos;
+    }
+
+    public String getTutorialVideoRangeStream(String fileName) {
+        return officialUrl + tutorialVideos + "/range/" + fileName;
+    }
     public String getSetPassword() {
         return officialUrl + setPassword;
     }
@@ -79,6 +89,9 @@ public class Url {
 
     public String getDeviceRegister() {
         return officialUrl + deviceRegister;
+    }
+    public String getDashboard() {
+        return officialUrl + dashboard;
     }
 
     /* ===================== USER PROFILE & COLLEGE ENDPOINTS ===================== */
