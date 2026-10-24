@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">BSc Notes</string>
+    <string name="slogan">BSc pahela dekki aahela samma</string>
+    <string name="maintenance_icon">Waiting makes Fruits more sweeter</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

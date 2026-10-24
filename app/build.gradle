@@ -1,0 +1,91 @@
+plugins {
+    alias(libs.plugins.android.application)
+}
+
+android {
+    namespace 'app.nepaliapp.bscnotes'
+    compileSdk {
+        version = release(36) {
+            minorApiLevel = 1
+        }
+    }
+
+    defaultConfig {
+        applicationId "app.nepaliapp.bscnotes"
+        minSdk 24
+        targetSdk 36
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner  "androidx.test.runner.AndroidJUnitRunner"
+        Properties properties = new Properties()
+        def propertiesFile = project.rootProject.file("local.properties")
+        if (propertiesFile.exists()) {
+            properties.load(propertiesFile.newInputStream())
+        }
+        buildConfigField "String", "API_KEY", "\"${properties.getProperty("API_KEY")}\"";
+        buildConfigField "String", "API_KEY1", "\"${properties.getProperty("API_KEY1")}\"";
+        buildConfigField "String", "API_KEY2", "\"${properties.getProperty("API_KEY2")}\"";
+    }
+    buildFeatures {
+        buildConfig = true
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+}
+
+dependencies {
+    implementation libs.activity.ktx
+    implementation libs.appcompat
+    implementation libs.constraintlayout
+    implementation libs.material
+    testImplementation libs.junit
+    androidTestImplementation libs.espresso.core
+    androidTestImplementation libs.ext.junit
+
+    //added by me
+    implementation 'com.android.volley:volley:1.2.1'
+    implementation 'com.hbb20:ccp:2.7.3'//for country Picker
+    implementation 'org.imaginativeworld.whynotimagecarousel:whynotimagecarousel:2.1.1'
+    implementation 'com.github.bumptech.glide:glide:5.0.7'
+
+    //For videos
+    implementation "androidx.media3:media3-exoplayer:1.10.0"
+    implementation "androidx.media3:media3-ui:1.10.0"
+    implementation "androidx.media3:media3-datasource:1.10.0"
+    implementation "androidx.media3:media3-session:1.10.0"
+
+    implementation "androidx.work:work-runtime:2.11.2"
+    // define a BOM and its version
+    implementation(platform("com.squareup.okhttp3:okhttp-bom:5.3.2"))
+    // define any required OkHttp artifacts without version
+    implementation("com.squareup.okhttp3:okhttp")
+
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.2.0'
+    implementation 'androidx.browser:browser:1.10.0'
+    // Use the latest version (currently 17.0.0 or higher)
+    implementation 'com.aheaditec.talsec.security:TalsecSecurity-Community:17.0.0'
+
+//    implementation 'com.google.android.gms:play-services-ads:23.0.0'
+    //Emojies Text Ensuring
+    implementation "androidx.emoji2:emoji2:1.6.0"
+//for encrypting Jwt Token
+    implementation "androidx.security:security-crypto:1.1.0"
+
+    //Notification Part
+    implementation platform('com.google.firebase:firebase-bom:34.17.0')
+
+    // ONLY Messaging - No Analytics, No Auth
+    implementation 'com.google.firebase:firebase-messaging'
+
+
+}

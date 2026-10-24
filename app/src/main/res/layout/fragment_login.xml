@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="app.nepaliapp.bscnotes.auth.fragments.LoginFragment">
+
+    <TextView
+        android:id="@+id/Logintextid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="Log In"
+        android:textColor="@color/Colour_After_click"
+        android:textSize="25sp" />
+
+    <RelativeLayout
+        android:id="@+id/EditTextHolder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/Logintextid"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="25dp">
+
+        <TextView
+            android:id="@+id/TextEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Email"
+            android:textSize="20sp"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="7dp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/EmailEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_below="@+id/TextEmail"
+            android:layout_marginTop="5dp"
+            android:autofillHints="emailAddress"
+            android:background="@drawable/edittextdesign"
+            android:ems="15"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
+            android:paddingStart="25dp"
+            android:textColor="@color/textcolor" />
+
+        <TextView
+            android:id="@+id/tvDeviceLinkedHint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/EmailEditText"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="2dp"
+            android:text="Device secured with this account"
+            android:textColor="@color/Colour_After_click"
+            android:textSize="12sp"
+            android:visibility="gone" />
+
+        <TextView
+            android:layout_marginTop="5dp"
+            android:id="@+id/TextPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Password"
+            android:textSize="20sp"
+            android:layout_below="@id/tvDeviceLinkedHint"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="7dp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/PasswordEdittext"
+            android:layout_marginTop="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:background="@drawable/edittextdesign"
+            android:layout_below="@id/TextPassword"
+            android:layout_centerHorizontal="true"
+            android:ems="15"
+            android:hint="Enter your Password"
+            android:textColor="@color/textcolor"
+            android:paddingStart="30dp"
+            android:inputType="textPassword" />
+
+        <ToggleButton
+            android:id="@+id/togglePasswordVisibility"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_toEndOf="@id/PasswordEdittext"
+            android:layout_marginStart="-40dp"
+            android:layout_alignBottom="@id/PasswordEdittext"
+            android:background="@drawable/ic_eye_toggle"
+            android:textOff=""
+            android:textOn=""
+            android:layout_marginBottom="10dp"/>
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/Forgetpassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/EditTextHolder"
+        android:layout_alignParentEnd="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:clickable="true"
+        android:text="Forget Password?"
+        android:textSize="18sp"
+        android:layout_marginEnd="10dp"/>
+
+    <RelativeLayout
+        android:layout_marginTop="45dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/EditTextHolder"
+        android:layout_marginBottom="25dp">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/signinButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Sign In"
+            android:textColor="@color/black"
+            android:background="@drawable/btn_design"
+            android:backgroundTint="@color/Colour_After_click"
+            android:stateListAnimator="@animator/click_animation" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/signUpButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/signinButton"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="30dp"
+            android:backgroundTint="@color/teal_700"
+            android:background="@drawable/btn_design"
+            android:layout_margin="10dp"
+            android:text="Create your account"
+            android:textColor="@color/white"
+            android:stateListAnimator="@animator/click_animation" />
+        <TextView
+            android:id="@+id/tvLegalAgreement"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/signUpButton"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:lineSpacingExtra="4dp"
+            android:text="By continuing, you agree to GyanKosh's \nTerms of Service and Privacy Policy"
+            android:textColor="@color/textcolor"
+            android:textSize="12sp"
+            android:layout_marginTop="15dp"/>
+
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/loadingOverlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#80000000"
+        android:visibility="gone"
+        android:clickable="true"
+        android:focusable="true">
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:layout_gravity="center" />
+    </FrameLayout>
+</RelativeLayout>

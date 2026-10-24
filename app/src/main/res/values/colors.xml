@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    //added
+    <color name="Colour_After_click">#0788DD</color>
+    <color name="textcolor">#141211</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="purple_500">#08176A</color>
+    <color name="error_red">#E53935</color>
+    <color name="primaryText">#212121</color>
+    <color name="secondaryText">#757575</color>
+    <color name="subtleAccent">#1976D2</color>
+    <color name="colorAccentDemo">#665815</color>
+    <color name="lightGray">#F5F5F5</color>
+    <color name="cardGray">#EEEEEE</color>
+    <color name="red">#C51B10</color>
+    <color name="blue">#1565C0</color>
+    <color name="gray">#888888</color>
+</resources>
