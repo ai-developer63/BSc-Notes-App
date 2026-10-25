@@ -21,11 +21,6 @@ import org.json.JSONObject;
 
 import app.nepaliapp.bscnotes.R;
 import app.nepaliapp.bscnotes.dashboard.DashBoardManagerActivity;
-import app.nepaliapp.bscnotes.dashboard.fragments.ChatFragment;
-import app.nepaliapp.bscnotes.dashboard.fragments.CourseFragment;
-import app.nepaliapp.bscnotes.dashboard.fragments.HomeFragment;
-import app.nepaliapp.bscnotes.dashboard.fragments.UnlockFragment;
-import app.nepaliapp.bscnotes.dashboard.fragments.VideosFragment;
 // TODO: Import other Tier 2 sub-fragments (e.g., ShopFragment, ShecmatricCompaniesFragment) as needed
 
 public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.ViewHolder> {
@@ -122,7 +117,7 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Vi
 
             case "chat":
                 // Tier 1 Root Tab: Chat
-                navigateToRootTab(R.id.nav_chat);
+                navigateToRootTab(R.id.nav_notice);
                 break;
 
 

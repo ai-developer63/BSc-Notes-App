@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#F5F5F5"
-    tools:context=".dashboard.fragments.ChatFragment">
+    tools:context=".dashboard.fragments.NoticeFragment">
 
     <!-- Message List -->
     <androidx.recyclerview.widget.RecyclerView

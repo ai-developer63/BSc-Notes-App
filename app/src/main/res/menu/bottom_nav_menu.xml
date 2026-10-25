@@ -17,7 +17,7 @@
         android:icon="@drawable/ic_nav_shop_modern"
         android:title="Unlock" />
     <item
-        android:id="@+id/nav_chat"
+        android:id="@+id/nav_notice"
         android:icon="@drawable/ic_nav_chat_modern"
         android:title="Chat" />
 </menu>

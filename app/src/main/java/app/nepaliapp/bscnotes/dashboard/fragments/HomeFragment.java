@@ -3,6 +3,7 @@ package app.nepaliapp.bscnotes.dashboard.fragments;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
@@ -46,6 +47,7 @@ import app.nepaliapp.bscnotes.adapters.CategoriesAdapter;
 import app.nepaliapp.bscnotes.common.Url;
 import app.nepaliapp.bscnotes.common_auth.MySingleton;
 import app.nepaliapp.bscnotes.dashboard.DashBoardManagerActivity;
+import app.nepaliapp.bscnotes.dashboard.serviceFragements.NoticeDetailFragment;
 import app.nepaliapp.bscnotes.dashboard.serviceFragements.TutorialVideoListFragment;
 import app.nepaliapp.bscnotes.dashboard.serviceFragements.VideoPlayingFragment;
 
@@ -55,11 +57,15 @@ public class HomeFragment extends Fragment {
     private TextView tvGreeting, tvCollegeBadge, tvHeaderNotePass, tvBigNotePassCount;
     private TextView tvOpenFullNotesCatalog, tvViewAllNotices, tvSeeAllTutorialVideos;
     private TextView tvGuideVideoTitle1, tvGuideVideoDesc1, tvGuideVideoTitle2, tvGuideVideoDesc2;
+    private TextView tvNoticeBadge1, tvNoticeTitle1, tvNoticeSubtext1;
+    private TextView tvNoticeBadge2, tvNoticeTitle2, tvNoticeSubtext2;
+    private View dividerNoticeTwo;
+
     private ImageView ivProfileAvatar, ivAppGuideThumb, ivAppGuideThumbTwo, btnNotifications;
     private ImageCarousel bannerCarousel;
     private RecyclerView rvCategories;
     private MaterialButton btnEarnNotePass;
-    private LinearLayout btnRedeemUnlockFeatures, layoutHomeVideosSection;
+    private LinearLayout btnRedeemUnlockFeatures, layoutHomeVideosSection, layoutHomeNoticeSection;
 
     private MaterialCardView cardAvatar, cardTopNotePassPill, cardSupportBadge;
     private MaterialCardView cardAppGuideVideo, cardAppGuideVideoTwo;
@@ -68,14 +74,11 @@ public class HomeFragment extends Fragment {
     private int notePassPoints = 250;
     private Url urlHelper;
 
-    // Holds raw carousel JSON objects in sync with bannerCarousel items for click routing
     private JSONArray activeCarouselJsonArray = new JSONArray();
-    // Holds raw homeVideos JSON objects (max 2) from /api/dash
     private JSONArray activeHomeVideosJsonArray = new JSONArray();
+    private JSONArray activeHomeNoticesJsonArray = new JSONArray();
 
-    public HomeFragment() {
-        // Required empty public constructor
-    }
+    public HomeFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -109,6 +112,14 @@ public class HomeFragment extends Fragment {
         tvGuideVideoTitle2 = view.findViewById(R.id.tvGuideVideoTitle2);
         tvGuideVideoDesc2 = view.findViewById(R.id.tvGuideVideoDesc2);
 
+        tvNoticeBadge1 = view.findViewById(R.id.tvNoticeBadge1);
+        tvNoticeTitle1 = view.findViewById(R.id.tvNoticeTitle1);
+        tvNoticeSubtext1 = view.findViewById(R.id.tvNoticeSubtext1);
+        tvNoticeBadge2 = view.findViewById(R.id.tvNoticeBadge2);
+        tvNoticeTitle2 = view.findViewById(R.id.tvNoticeTitle2);
+        tvNoticeSubtext2 = view.findViewById(R.id.tvNoticeSubtext2);
+        dividerNoticeTwo = view.findViewById(R.id.dividerNoticeTwo);
+
         ivProfileAvatar = view.findViewById(R.id.ivProfileAvatar);
         ivAppGuideThumb = view.findViewById(R.id.ivAppGuideThumb);
         ivAppGuideThumbTwo = view.findViewById(R.id.ivAppGuideThumbTwo);
@@ -122,6 +133,7 @@ public class HomeFragment extends Fragment {
         btnEarnNotePass = view.findViewById(R.id.btnEarnNotePass);
         btnRedeemUnlockFeatures = view.findViewById(R.id.btnRedeemUnlockFeatures);
         layoutHomeVideosSection = view.findViewById(R.id.layoutHomeVideosSection);
+        layoutHomeNoticeSection = view.findViewById(R.id.layoutHomeNoticeSection);
 
         cardAvatar = view.findViewById(R.id.cardAvatar);
         cardTopNotePassPill = view.findViewById(R.id.cardTopNotePassPill);
@@ -135,14 +147,8 @@ public class HomeFragment extends Fragment {
         swipeRefreshLayout.setColorSchemeColors(Color.parseColor("#2563EB"));
     }
 
-    // =========================================================================
-    // 1. NETWORK FETCHER & MODULAR DISPATCHER
-    // =========================================================================
-
     private void loadDashboardContent() {
         swipeRefreshLayout.setRefreshing(true);
-
-        // Static UI elements & default wallet display
         updateNotePassDisplay();
 
         JsonObjectRequest dashboardRequest = new JsonObjectRequest(
@@ -150,7 +156,6 @@ public class HomeFragment extends Fragment {
                 urlHelper.getDashboard(),
                 null,
                 response -> {
-                    Log.d("Home weblog", "yes"+response);
                     if (!isAdded() || getContext() == null) return;
                     swipeRefreshLayout.setRefreshing(false);
                     dispatchDashboardPayload(response);
@@ -162,41 +167,27 @@ public class HomeFragment extends Fragment {
                 }
         );
 
-        // X-App-Code and Bearer JWT are automatically attached by MySingleton!
         MySingleton.getInstance(requireContext()).addToRequestQueue(dashboardRequest);
     }
 
     private void dispatchDashboardPayload(JSONObject response) {
         if (response == null) return;
 
-        // 1. User Profile Header Block
         JSONObject userBlock = response.optJSONObject("user");
-        if (userBlock != null) {
-            renderIdentityHeader(userBlock);
-        }
+        if (userBlock != null) renderIdentityHeader(userBlock);
 
-        // 2. Carousels Block
         JSONArray carouselsBlock = response.optJSONArray("carousels");
-        if (carouselsBlock != null) {
-            renderCarousels(carouselsBlock);
-        }
+        if (carouselsBlock != null) renderCarousels(carouselsBlock);
 
-        // 3. Study Categories Block
         JSONArray categoriesBlock = response.optJSONArray("categories");
-        if (categoriesBlock != null) {
-            renderCategories(categoriesBlock);
-        }
+        if (categoriesBlock != null) renderCategories(categoriesBlock);
 
-        // 4. Home Tutorial Videos Block (Max 2 localized videos)
         JSONArray homeVideosBlock = response.optJSONArray("homeVideos");
-        if (homeVideosBlock != null) {
-            renderHomeVideos(homeVideosBlock);
-        }
-    }
+        if (homeVideosBlock != null) renderHomeVideos(homeVideosBlock);
 
-    // =========================================================================
-    // 2. DEDICATED SECTION RENDERERS
-    // =========================================================================
+        JSONArray noticesBlock = response.optJSONArray("notices");
+        if (noticesBlock != null) renderHomeNotices(noticesBlock);
+    }
 
     @SuppressLint("SetTextI18n")
     private void renderIdentityHeader(JSONObject userObj) {
@@ -215,7 +206,6 @@ public class HomeFragment extends Fragment {
 
         String displayCollege = !collegeName.trim().isEmpty() ? collegeName.trim() : "Tribhuvan University";
         String displayYear = !sessionLabel.trim().isEmpty() ? sessionLabel.trim() : "BSc";
-
         tvCollegeBadge.setText("🏛️ " + displayYear + " • " + displayCollege);
 
         String avatarUrl = "https://ui-avatars.com/api/?name=" + Uri.encode(fullName) + "&background=2563EB&color=fff&bold=true";
@@ -236,7 +226,6 @@ public class HomeFragment extends Fragment {
                 }
             }
         }
-
         if (!items.isEmpty()) {
             bannerCarousel.setData(items);
         }
@@ -249,15 +238,12 @@ public class HomeFragment extends Fragment {
 
     private void renderHomeVideos(JSONArray homeVideosArray) {
         activeHomeVideosJsonArray = homeVideosArray;
-
         if (homeVideosArray.length() == 0) {
             layoutHomeVideosSection.setVisibility(View.GONE);
             return;
         }
-
         layoutHomeVideosSection.setVisibility(View.VISIBLE);
 
-        // Bind Video 1
         JSONObject v1 = homeVideosArray.optJSONObject(0);
         if (v1 != null) {
             cardAppGuideVideo.setVisibility(View.VISIBLE);
@@ -266,14 +252,10 @@ public class HomeFragment extends Fragment {
             tvGuideVideoDesc1.setText(cleanDesc1);
             tvGuideVideoDesc1.setVisibility(cleanDesc1.isEmpty() ? View.GONE : View.VISIBLE);
 
-            Glide.with(this)
-                    .load(v1.optString("thumbnailUrl", ""))
-                    .placeholder(R.mipmap.ic_launcher)
-                    .centerCrop()
-                    .into(ivAppGuideThumb);
+            Glide.with(this).load(v1.optString("thumbnailUrl", ""))
+                    .placeholder(R.mipmap.ic_launcher).centerCrop().into(ivAppGuideThumb);
         }
 
-        // Bind Video 2 (if present)
         if (homeVideosArray.length() >= 2) {
             JSONObject v2 = homeVideosArray.optJSONObject(1);
             if (v2 != null) {
@@ -283,20 +265,62 @@ public class HomeFragment extends Fragment {
                 tvGuideVideoDesc2.setText(cleanDesc2);
                 tvGuideVideoDesc2.setVisibility(cleanDesc2.isEmpty() ? View.GONE : View.VISIBLE);
 
-                Glide.with(this)
-                        .load(v2.optString("thumbnailUrl", ""))
-                        .placeholder(R.mipmap.ic_launcher)
-                        .centerCrop()
-                        .into(ivAppGuideThumbTwo);
+                Glide.with(this).load(v2.optString("thumbnailUrl", ""))
+                        .placeholder(R.mipmap.ic_launcher).centerCrop().into(ivAppGuideThumbTwo);
             }
         } else {
             cardAppGuideVideoTwo.setVisibility(View.GONE);
         }
     }
 
-    // =========================================================================
-    // 3. CAROUSEL & UI CLICK HANDLERS
-    // =========================================================================
+    private void renderHomeNotices(JSONArray noticesArray) {
+        activeHomeNoticesJsonArray = noticesArray;
+
+        if (noticesArray.length() == 0) {
+            if (layoutHomeNoticeSection != null) layoutHomeNoticeSection.setVisibility(View.GONE);
+            return;
+        }
+        if (layoutHomeNoticeSection != null) layoutHomeNoticeSection.setVisibility(View.VISIBLE);
+
+        // Bind Notice 1
+        JSONObject n1 = noticesArray.optJSONObject(0);
+        if (n1 != null) {
+            noticeItemOne.setVisibility(View.VISIBLE);
+            bindSingleHomeNoticeRow(n1, tvNoticeBadge1, tvNoticeTitle1, tvNoticeSubtext1);
+        }
+
+        // Bind Notice 2
+        if (noticesArray.length() >= 2) {
+            JSONObject n2 = noticesArray.optJSONObject(1);
+            if (n2 != null) {
+                if (dividerNoticeTwo != null) dividerNoticeTwo.setVisibility(View.VISIBLE);
+                noticeItemTwo.setVisibility(View.VISIBLE);
+                bindSingleHomeNoticeRow(n2, tvNoticeBadge2, tvNoticeTitle2, tvNoticeSubtext2);
+            }
+        } else {
+            if (dividerNoticeTwo != null) dividerNoticeTwo.setVisibility(View.GONE);
+            noticeItemTwo.setVisibility(View.GONE);
+        }
+    }
+
+    private void bindSingleHomeNoticeRow(JSONObject noticeObj, TextView tvBadge, TextView tvTitle, TextView tvSub) {
+        if (tvTitle != null) tvTitle.setText(noticeObj.optString("heading", "Notice Update"));
+        if (tvSub != null) tvSub.setText(noticeObj.optString("subtext", "Tap to view details"));
+
+        JSONObject badgeObj = noticeObj.optJSONObject("badge");
+        if (tvBadge != null && badgeObj != null) {
+            tvBadge.setText(badgeObj.optString("text", "NOTICE"));
+            try {
+                int textColor = Color.parseColor(badgeObj.optString("textColor", "#E11D48"));
+                int bgColor = Color.parseColor(badgeObj.optString("bgColor", "#FFE4E6"));
+                tvBadge.setTextColor(textColor);
+                GradientDrawable pill = new GradientDrawable();
+                pill.setColor(bgColor);
+                pill.setCornerRadius(12f);
+                tvBadge.setBackground(pill);
+            } catch (Exception ignored) {}
+        }
+    }
 
     private void setupCarouselConfig() {
         bannerCarousel.registerLifecycle(getViewLifecycleOwner());
@@ -306,19 +330,14 @@ public class HomeFragment extends Fragment {
             public ViewBinding onCreateViewHolder(@NonNull LayoutInflater layoutInflater, @NonNull ViewGroup viewGroup) {
                 return null;
             }
-
             @Override
-            public void onBindViewHolder(@NonNull ViewBinding viewBinding, @NonNull CarouselItem carouselItem, int i) {
-            }
-
+            public void onBindViewHolder(@NonNull ViewBinding viewBinding, @NonNull CarouselItem carouselItem, int i) {}
             @Override
             public void onClick(int position, @NonNull CarouselItem carouselItem) {
                 handleCarouselClick(position);
             }
-
             @Override
-            public void onLongClick(int i, @NonNull CarouselItem carouselItem) {
-            }
+            public void onLongClick(int i, @NonNull CarouselItem carouselItem) {}
         });
     }
 
@@ -335,8 +354,6 @@ public class HomeFragment extends Fragment {
             } catch (Exception e) {
                 Toast.makeText(requireContext(), "Invalid link", Toast.LENGTH_SHORT).show();
             }
-        } else {
-            Toast.makeText(requireContext(), clickedObj.optString("name", "Banner clicked"), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -360,32 +377,49 @@ public class HomeFragment extends Fragment {
         View.OnClickListener notesClick = v -> navigateToBottomTab(R.id.nav_courses);
         tvOpenFullNotesCatalog.setOnClickListener(notesClick);
 
-        // Video Card 1, Video Card 2, and "See All ->" Listeners
         cardAppGuideVideo.setOnClickListener(v -> openTutorialVideoInSubFragment(0));
         cardAppGuideVideoTwo.setOnClickListener(v -> openTutorialVideoInSubFragment(1));
         tvSeeAllTutorialVideos.setOnClickListener(v -> openAllTutorialVideosSubFragment());
+
+        // Notice Card Click Listeners
+        noticeItemOne.setOnClickListener(v -> openNoticeDetailFromHome(0));
+        noticeItemTwo.setOnClickListener(v -> openNoticeDetailFromHome(1));
+        tvViewAllNotices.setOnClickListener(v -> openFullNoticesTabOrSubFragment());
+    }
+
+    private void openNoticeDetailFromHome(int index) {
+        JSONObject item = activeHomeNoticesJsonArray.optJSONObject(index);
+        if (item == null) {
+            openFullNoticesTabOrSubFragment();
+            return;
+        }
+        long noticeId = item.optLong("id", 0L);
+        String heading = item.optString("heading", "Notice Details");
+        if (noticeId > 0 && getActivity() instanceof DashBoardManagerActivity) {
+            NoticeDetailFragment detailFragment = NoticeDetailFragment.newInstance(noticeId, heading);
+            ((DashBoardManagerActivity) getActivity()).openSubFragment(detailFragment, true);
+        }
+    }
+
+    private void openFullNoticesTabOrSubFragment() {
+        if (getActivity() instanceof DashBoardManagerActivity) {
+            ((DashBoardManagerActivity) getActivity()).openSubFragment(new NoticeFragment(), true);
+        }
     }
 
     private void openTutorialVideoInSubFragment(int index) {
         if (!(getActivity() instanceof DashBoardManagerActivity)) return;
-
         JSONObject videoObj = activeHomeVideosJsonArray.optJSONObject(index);
         if (videoObj == null) {
             openAllTutorialVideosSubFragment();
             return;
         }
-
-        String videoUrl = videoObj.optString("videoUrl", "");
-        String title = videoObj.optString("title", "Tutorial Video");
-        String desc = videoObj.optString("description", "");
-
         VideoPlayingFragment playerFragment = VideoPlayingFragment.newInstance(
-                videoUrl,
-                title,
-                desc,
+                videoObj.optString("videoUrl", ""),
+                videoObj.optString("title", "Tutorial Video"),
+                videoObj.optString("description", ""),
                 activeHomeVideosJsonArray.toString()
         );
-
         ((DashBoardManagerActivity) getActivity()).openSubFragment(playerFragment, true);
     }
 

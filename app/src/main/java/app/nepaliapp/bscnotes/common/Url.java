@@ -39,6 +39,23 @@ public class Url {
 
     // Home Videos Url
     String tutorialVideos = "api/tutorial-videos";
+
+    // Exam & Notice Board Endpoints
+    String noticesBase = "api/notices";
+
+    // Exam & Notice Board Endpoints
+    public String getLatestNotices() {
+        return officialUrl + noticesBase + "/latest";
+    }
+
+    public String getPaginatedNotices(int page, int size) {
+        return officialUrl + noticesBase + "?page=" + Math.max(page, 0) + "&size=" + (size <= 0 ? 15 : size);
+    }
+
+    public String getNoticeDetail(long noticeId) {
+        return officialUrl + noticesBase + "/" + noticeId;
+    }
+
     // Add methods for HomeVideos
     public String getTutorialVideos() {
         return officialUrl + tutorialVideos;

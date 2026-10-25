@@ -25,9 +25,9 @@ import org.json.JSONObject;
 
 import app.nepaliapp.bscnotes.R;
 import app.nepaliapp.bscnotes.common.DataStorage;
-import app.nepaliapp.bscnotes.dashboard.fragments.ChatFragment;
 import app.nepaliapp.bscnotes.dashboard.fragments.CourseFragment;
 import app.nepaliapp.bscnotes.dashboard.fragments.HomeFragment;
+import app.nepaliapp.bscnotes.dashboard.fragments.NoticeFragment;
 import app.nepaliapp.bscnotes.dashboard.fragments.UnlockFragment;
 import app.nepaliapp.bscnotes.dashboard.fragments.VideosFragment;
 import app.nepaliapp.bscnotes.dashboard.helper.ProfileNetworkManager;
@@ -69,7 +69,7 @@ public class DashBoardManagerActivity extends AppCompatActivity {
     }
 
     private void setupBottomNavigation() {
-        BadgeDrawable chatBadge = bottomNavigationView.getOrCreateBadge(R.id.nav_chat);
+        BadgeDrawable chatBadge = bottomNavigationView.getOrCreateBadge(R.id.nav_notice);
         chatBadge.setBackgroundColor(Color.parseColor("#16A34A"));
         chatBadge.setVisible(true);
 
@@ -91,9 +91,9 @@ public class DashBoardManagerActivity extends AppCompatActivity {
             } else if (id == R.id.nav_unlock) {
                 switchBaseTab("UNLOCK", new UnlockFragment());
                 return true;
-            } else if (id == R.id.nav_chat) {
+            } else if (id == R.id.nav_notice) {
                 chatBadge.setVisible(false);
-                switchBaseTab("CHAT", new ChatFragment());
+                switchBaseTab("NOTICE", new NoticeFragment());
                 return true;
             }
             return false;
@@ -228,7 +228,7 @@ public class DashBoardManagerActivity extends AppCompatActivity {
         if (id == R.id.nav_courses) return "COURSES";
         if (id == R.id.nav_videos) return "VIDEOS";
         if (id == R.id.nav_unlock) return "UNLOCK";
-        if (id == R.id.nav_chat) return "CHAT";
+        if (id == R.id.nav_notice) return "NOTICE";
         return "HOME";
     }
 

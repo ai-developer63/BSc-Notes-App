@@ -155,11 +155,11 @@
                 android:focusable="true"
                 android:padding="6dp"
                 android:src="@android:drawable/ic_popup_reminder"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:tint="#1E293B"
-                android:visibility="gone"/>
+                app:tint="#1E293B" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 
@@ -200,9 +200,8 @@
                         android:id="@+id/ImageViewCard"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-
-                        app:cardCornerRadius="8dp"
-                        android:background="@color/white">
+                        android:background="@color/white"
+                        app:cardCornerRadius="8dp">
 
                         <org.imaginativeworld.whynotimagecarousel.ImageCarousel
                             android:id="@+id/bannerCarousel"
@@ -217,7 +216,7 @@
                             app:showCaption="false"
                             app:showIndicator="true"
                             app:showNavigationButtons="false"
-                            app:showTopShadow="false"  />
+                            app:showTopShadow="false" />
                     </androidx.cardview.widget.CardView>
                 </com.google.android.material.card.MaterialCardView>
 
@@ -250,7 +249,7 @@
                         android:textColor="#2563EB"
                         android:textSize="12sp"
                         android:textStyle="bold"
-                        android:visibility="gone"/>
+                        android:visibility="gone" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -272,7 +271,7 @@
                             android:layout_height="wrap_content"
                             android:clipToPadding="false"
                             android:paddingStart="8dp"
-                            android:paddingEnd="8dp"/>
+                            android:paddingEnd="8dp" />
                     </RelativeLayout>
                 </LinearLayout>
 
@@ -311,7 +310,12 @@
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent">
-                                <TextView android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center" android:text="⚡" android:textSize="20sp" />
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center"
+                                    android:text="⚡"
+                                    android:textSize="20sp" />
                             </com.google.android.material.card.MaterialCardView>
 
                             <LinearLayout
@@ -324,9 +328,30 @@
                                 app:layout_constraintStart_toEndOf="@id/iconBoltCircle"
                                 app:layout_constraintTop_toTopOf="parent">
 
-                                <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="MY NOTEPASS WALLET" android:textColor="#92400E" android:textSize="10sp" android:textStyle="bold" android:singleLine="true"/>
-                                <TextView android:id="@+id/tvBigNotePassCount" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="250 NotePass" android:textColor="#B45309" android:textSize="19sp" android:textStyle="bold" android:singleLine="true"/>
-                                <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Free study currency • Watch ad to refuel" android:textColor="#78350F" android:textSize="11sp" android:singleLine="true"/>
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:singleLine="true"
+                                    android:text="MY NOTEPASS WALLET"
+                                    android:textColor="#92400E"
+                                    android:textSize="10sp"
+                                    android:textStyle="bold" />
+                                <TextView
+                                    android:id="@+id/tvBigNotePassCount"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:singleLine="true"
+                                    android:text="250 NotePass"
+                                    android:textColor="#B45309"
+                                    android:textSize="19sp"
+                                    android:textStyle="bold" />
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:singleLine="true"
+                                    android:text="Free study currency • Watch ad to refuel"
+                                    android:textColor="#78350F"
+                                    android:textSize="11sp" />
                             </LinearLayout>
 
                             <com.google.android.material.button.MaterialButton
@@ -348,7 +373,10 @@
                                 app:layout_constraintTop_toTopOf="parent" />
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
-                        <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#FDE68A" />
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="#FDE68A" />
 
                         <LinearLayout
                             android:id="@+id/btnRedeemUnlockFeatures"
@@ -361,8 +389,23 @@
                             android:orientation="horizontal"
                             android:paddingHorizontal="14dp"
                             android:paddingVertical="10dp">
-                            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="🔓 Use NotePass to unlock Notes, Videos &amp; Old is Gold" android:textColor="#1E293B" android:textSize="12sp" android:textStyle="bold" android:singleLine="true"/>
-                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="8dp" android:text="Unlock Now →" android:textColor="#2563EB" android:textSize="12sp" android:textStyle="bold" />
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:singleLine="true"
+                                android:text="🔓 Use NotePass to unlock Notes, Videos &amp; Old is Gold"
+                                android:textColor="#1E293B"
+                                android:textSize="12sp"
+                                android:textStyle="bold" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:text="Unlock Now →"
+                                android:textColor="#2563EB"
+                                android:textSize="12sp"
+                                android:textStyle="bold" />
                         </LinearLayout>
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
@@ -473,8 +516,8 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="4dp"
-                                    android:maxLines="2"
                                     android:ellipsize="end"
+                                    android:maxLines="2"
                                     android:text="यसमा Free मा NotePass कसरी कमाउने र सम्पूर्ण विषयको Notes, Old is Gold र Video Course कसरी अनलक गर्ने सिकाइएको छ।"
                                     android:textColor="#475569"
                                     android:textSize="12sp" />
@@ -552,77 +595,173 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="4dp"
-                                    android:maxLines="2"
                                     android:ellipsize="end"
+                                    android:maxLines="2"
                                     android:textColor="#475569"
                                     android:textSize="12sp" />
                             </LinearLayout>
                         </LinearLayout>
                     </com.google.android.material.card.MaterialCardView>
                 </LinearLayout>
+
                 <!-- 5. NOTICE BOARD SECTION -->
                 <LinearLayout
+                    android:id="@+id/layoutHomeNoticeSection"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:layout_marginBottom="8dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="📢 Notice &amp; Exam Updates" android:textColor="#0F172A" android:textSize="16sp" android:textStyle="bold" />
-                    <TextView android:id="@+id/tvViewAllNotices" android:layout_width="wrap_content" android:layout_height="wrap_content" android:clickable="true" android:focusable="true" android:padding="4dp" android:text="View All →" android:textColor="#2563EB" android:textSize="12sp" android:textStyle="bold" />
-                </LinearLayout>
-
-                <com.google.android.material.card.MaterialCardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:cardBackgroundColor="#FFFFFF"
-                    app:cardCornerRadius="16dp"
-                    app:cardElevation="1dp"
-                    app:strokeColor="#E2E8F0"
-                    app:strokeWidth="1dp">
+                    android:orientation="vertical">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <LinearLayout
-                            android:id="@+id/noticeItemOne"
-                            android:layout_width="match_parent"
+                        android:layout_marginBottom="8dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:background="?attr/selectableItemBackground"
+                            android:layout_weight="1"
+                            android:text="📢 Notice &amp; Exam Updates"
+                            android:textColor="#0F172A"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+                        <TextView
+                            android:id="@+id/tvViewAllNotices"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:clickable="true"
                             android:focusable="true"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal"
-                            android:padding="14dp">
-                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:background="#FFE4E6" android:paddingHorizontal="8dp" android:paddingVertical="4dp" android:text="EXAM" android:textColor="#E11D48" android:textSize="10sp" android:textStyle="bold" />
-                            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_marginStart="12dp" android:layout_weight="1" android:orientation="vertical">
-                                <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="TU BSc Exam Routine &amp; Form Fill-Up Notice Published" android:textColor="#0F172A" android:textSize="13sp" android:textStyle="bold" android:maxLines="1" android:ellipsize="end"/>
-                                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="2dp" android:text="Controller of Examinations (Balkhu) • Tap to view" android:textColor="#64748B" android:textSize="11sp" />
-                            </LinearLayout>
-                        </LinearLayout>
-
-                        <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#F1F5F9" />
-
-                        <LinearLayout
-                            android:id="@+id/noticeItemTwo"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="?attr/selectableItemBackground"
-                            android:clickable="true"
-                            android:focusable="true"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal"
-                            android:padding="14dp">
-                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:background="#DCFCE7" android:paddingHorizontal="8dp" android:paddingVertical="4dp" android:text="LAB" android:textColor="#15803D" android:textSize="10sp" android:textStyle="bold" />
-                            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_marginStart="12dp" android:layout_weight="1" android:orientation="vertical">
-                                <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="New BSc Practical Lab Viva Questions &amp; PDFs Added" android:textColor="#0F172A" android:textSize="13sp" android:textStyle="bold" android:maxLines="1" android:ellipsize="end"/>
-                                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="2dp" android:text="BSc Notes Academic Team • Updated" android:textColor="#64748B" android:textSize="11sp" />
-                            </LinearLayout>
-                        </LinearLayout>
+                            android:padding="4dp"
+                            android:text="View All →"
+                            android:textColor="#2563EB"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
                     </LinearLayout>
-                </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardBackgroundColor="#FFFFFF"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="1dp"
+                        app:strokeColor="#E2E8F0"
+                        app:strokeWidth="1dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:id="@+id/noticeItemOne"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="?attr/selectableItemBackground"
+                                android:clickable="true"
+                                android:focusable="true"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal"
+                                android:padding="14dp">
+                                <TextView
+                                    android:id="@+id/tvNoticeBadge1"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="#FFE4E6"
+                                    android:paddingHorizontal="8dp"
+                                    android:paddingVertical="4dp"
+                                    android:text="EXAM"
+                                    android:textColor="#E11D48"
+                                    android:textSize="10sp"
+                                    android:textStyle="bold" />
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="12dp"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
+                                    <TextView
+                                        android:id="@+id/tvNoticeTitle1"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:ellipsize="end"
+                                        android:maxLines="1"
+                                        android:text="TU BSc Exam Routine &amp; Form Fill-Up Notice Published"
+                                        android:textColor="#0F172A"
+                                        android:textSize="13sp"
+                                        android:textStyle="bold" />
+                                    <TextView
+                                        android:id="@+id/tvNoticeSubtext1"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="2dp"
+                                        android:ellipsize="end"
+                                        android:maxLines="1"
+                                        android:text="Controller of Examinations (Balkhu) • Tap to view"
+                                        android:textColor="#64748B"
+                                        android:textSize="11sp" />
+                                </LinearLayout>
+                            </LinearLayout>
+
+                            <View
+                                android:id="@+id/dividerNoticeTwo"
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="#F1F5F9" />
+
+                            <LinearLayout
+                                android:id="@+id/noticeItemTwo"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="?attr/selectableItemBackground"
+                                android:clickable="true"
+                                android:focusable="true"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal"
+                                android:padding="14dp">
+                                <TextView
+                                    android:id="@+id/tvNoticeBadge2"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="#DCFCE7"
+                                    android:paddingHorizontal="8dp"
+                                    android:paddingVertical="4dp"
+                                    android:text="LAB"
+                                    android:textColor="#15803D"
+                                    android:textSize="10sp"
+                                    android:textStyle="bold" />
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="12dp"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
+                                    <TextView
+                                        android:id="@+id/tvNoticeTitle2"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:ellipsize="end"
+                                        android:maxLines="1"
+                                        android:text="New BSc Practical Lab Viva Questions &amp; PDFs Added"
+                                        android:textColor="#0F172A"
+                                        android:textSize="13sp"
+                                        android:textStyle="bold" />
+                                    <TextView
+                                        android:id="@+id/tvNoticeSubtext2"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="2dp"
+                                        android:ellipsize="end"
+                                        android:maxLines="1"
+                                        android:text="BSc Notes Academic Team • Updated"
+                                        android:textColor="#64748B"
+                                        android:textSize="11sp" />
+                                </LinearLayout>
+                            </LinearLayout>
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+                </LinearLayout>
+
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
